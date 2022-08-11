@@ -2,17 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  labels:
-    app: frontend
 spec:
   selector:
     matchLabels:
-      app: frontend
+      run: frontend
   replicas: 2
   template:
     metadata:
       labels:
-        app: frontend
+        run: frontend
     spec:
       containers:
       - name: frontend
@@ -33,11 +31,11 @@ kind: Service
 metadata:
   name: frontend
   labels:
-    app: frontend
+    run: frontend
 spec:
   ports:
   - port: 8100
     targetPort: 80
     protocol: TCP
   selector:
-    app: frontend
+    run: frontend

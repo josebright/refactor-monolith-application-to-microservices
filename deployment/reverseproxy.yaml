@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reverseproxy
-  labels:
-    app: reverseproxy
 spec:
   selector:
     matchLabels:
@@ -18,7 +16,7 @@ spec:
       - name: reverseproxy
         image: docker.io/josebright/reverseproxy:v3
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources:
           limits:
             cpu: "500m"
