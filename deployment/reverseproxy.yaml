@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: reverseproxy
-        image: docker.io/josebright/reverseproxy
+        image: docker.io/josebright/reverseproxy:v3
         ports:
         - containerPort: 80
         resources:
