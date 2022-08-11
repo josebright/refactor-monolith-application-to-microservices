@@ -5,35 +5,61 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: backend-feed
+      app: backend-feed
   replicas: 2
   template:
     metadata:
       labels:
-        run: backend-feed
+        app: backend-feed
     spec:
       containers:
       - name: backend-feed
+        imagePullPolicy: Always
         image: docker.io/josebright/udagram-api-feed:v3
+        env:
+          - name: POSTGRESS_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: POSTGRESS_USERNAME
+          - name: POSTGRESS_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: POSTGRESS_PASSWORD
+          - name: POSTGRESS_DB
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: POSTGRESS_DB
+          - name: POSTGRESS_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: POSTGRESS_HOST
+
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         resources:
           limits:
-            cpu: 500m
+            cpu: "500m"
+            memory: "4096Mi"
           requests:
-            cpu: 200m
+            cpu: "250m"
+            memory: "1000Mi"
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: backend-feed
+    app: backend-feed
   name: backend-feed
 spec:
   ports:
   - name: "8080"
     port: 8080
+    protocol: TCP
     targetPort: 8080
   selector:
-    service: backend-feed
+    app: backend-feed

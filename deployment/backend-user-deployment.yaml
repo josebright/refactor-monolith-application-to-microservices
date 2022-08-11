@@ -2,26 +2,53 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-user
+  labels:
+    app: backend-user
 spec:
   selector:
     matchLabels:
-      run: backend-user
+      app: backend-user
   replicas: 2
   template:
     metadata:
       labels:
-        run: backend-user
+        app: backend-user
     spec:
       containers:
       - name: backend-user
+        imagePullPolicy: Always
         image: docker.io/josebright/udagram-api-user:v3
+        env:
+         - name: POSTGRESS_USERNAME
+           valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: POSTGRESS_USERNAME 
+         - name: POSTGRESS_USERNAME
+           valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: POSTGRESS_PASSWORD
+         - name: POSTGRESS_DB
+           valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: POSTGRESS_DB
+         - name: POSTGRESS_HOST
+           valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: POSTGRESS_HOST
+
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         resources:
           limits:
-            cpu: 500m
+            cpu: "500m"
+            memory: "4096Mi"
           requests:
-            cpu: 200m
+            cpu: "250m"
+            memory: "1000Mi"
 
 
 ---
@@ -35,6 +62,7 @@ spec:
   ports:
   - name: "8080"
     port: 8080
+    protocol: TCP
     targetPort: 8080
   selector:
     service: backend-user

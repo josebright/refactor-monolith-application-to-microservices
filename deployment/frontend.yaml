@@ -2,26 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  labels:
+    app: frontend
 spec:
   selector:
     matchLabels:
-      run: frontend
+      app: frontend
   replicas: 2
   template:
     metadata:
       labels:
-        run: frontend
+        app: frontend
     spec:
       containers:
       - name: frontend
         image: docker.io/josebright/udagram-frontend:v3
         ports: 
         - containerPort: 80
+        imagePullPolicy: Always
         resources:
           limits:
-            cpu: 500m
+            cpu: "500m"
           requests:
-            cpu: 200m
+            cpu: "250m"
+      restartPolicy: Always
 
 ---
 apiVersion: v1
@@ -29,10 +33,11 @@ kind: Service
 metadata:
   name: frontend
   labels:
-    run: frontend
+    app: frontend
 spec:
   ports:
-  - port: 80
+  - port: 8100
+    targetPort: 80
     protocol: TCP
   selector:
-    run: frontend
+    app: frontend
