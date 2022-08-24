@@ -5,7 +5,7 @@ metadata:
 data:
   POSTGRES_USERNAME: postgres
   POSTGRES_PASSWORD: Ugwumadu
-  POSTGRES_HOST: postgres.cjtjdccei8up.us-east-1.rds.amazonaws.com
+  POSTGRES_HOST: postgres.cg1zfzqfbzaj.us-east-1.rds.amazonaws.com
   POSTGRES_DB: postgres
   AWS_BUCKET: arn:aws:s3:::josebrightbucket
   AWS_REGION: us-east-1
