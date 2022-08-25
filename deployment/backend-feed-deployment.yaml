@@ -14,39 +14,14 @@ spec:
     spec:
       containers:
       - name: backend-feed
-        imagePullPolicy: Always
-        image: docker.io/josebright/udagram-api-feed
-        env:
-          - name: POSTGRESS_USERNAME
-            valueFrom:
-              configMapKeyRef:
-                name: env-config
-                key: POSTGRESS_USERNAME
-          - name: POSTGRESS_PASSWORD
-            valueFrom:
-              configMapKeyRef:
-                name: env-config
-                key: POSTGRESS_PASSWORD
-          - name: POSTGRESS_DB
-            valueFrom:
-              configMapKeyRef:
-                name: env-config
-                key: POSTGRESS_DB
-          - name: POSTGRESS_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: env-config
-                key: POSTGRESS_HOST
-
+        image: docker.io/josebright/udagram-api-feed:v3
         ports:
         - containerPort: 80
         resources:
           limits:
-            cpu: "500m"
-            memory: "4096Mi"
+            cpu: 500m
           requests:
-            cpu: "250m"
-            memory: "1000Mi"
+            cpu: 200m
 
 ---
 apiVersion: v1
@@ -59,7 +34,6 @@ spec:
   ports:
   - name: "8080"
     port: 8080
-    protocol: TCP
     targetPort: 8080
   selector:
     service: backend-feed

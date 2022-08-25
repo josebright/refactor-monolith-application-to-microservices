@@ -14,16 +14,14 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: docker.io/josebright/udagram-frontend:v3
+        image: docker.io/josebright/udagram-frontend
         ports: 
         - containerPort: 80
-        imagePullPolicy: Always
         resources:
           limits:
-            cpu: "500m"
+            cpu: 500m
           requests:
-            cpu: "250m"
-      restartPolicy: Always
+            cpu: 200m
 
 ---
 apiVersion: v1
@@ -34,8 +32,7 @@ metadata:
     run: frontend
 spec:
   ports:
-  - port: 8100
-    targetPort: 80
+  - port: 80
     protocol: TCP
   selector:
     run: frontend
